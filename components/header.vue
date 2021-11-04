@@ -7,13 +7,6 @@
           alt="kpn logo"
           height="40px"
         >
-        <div class="header__top-bar__icons">
-          <!-- TODO: replace with correct icons -->
-          <span><i class="icofont-ui-user" /> MijnKPN</span>
-          <span><i class="icofont-basket" /></span>
-          <span><i class="icofont-envelope" /></span>
-          <span><i class="icofont-search-2" /></span>
-        </div>
       </div>
     </div>
     <div class="header__bottom-bar align-items-center">
