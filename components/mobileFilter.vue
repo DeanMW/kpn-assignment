@@ -14,10 +14,26 @@
 </template>
 <script lang="ts">
 import {
-  defineComponent
+  computed,
+  defineComponent,
+  useStore,
+  watch
 } from '@nuxtjs/composition-api';
+import { RootStoreState } from '~/types/state';
 
 export default defineComponent({
+  setup () {
+    const store = useStore<RootStoreState>();
+    const currentDevices = computed(
+      () => store.getters['devices/getDevices']
+    );
+
+    watch([currentDevices], () => {
+      store.dispatch('devices/filterDevices', { manufacturer: 'Apple' });
+    });
+
+    return {};
+  },
   data () {
     return {
       value: [],
