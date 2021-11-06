@@ -29,9 +29,9 @@
         >
           <v-list-item-title>
             <v-checkbox
-              v-model="value"
-              :label="item.name"
-              :value="item.value"
+              :label="`${item.name} (${item.count})`"
+              :value="item.isSelected"
+              @change="setFilter(item)"
             />
           </v-list-item-title>
         </v-list-item>
@@ -41,13 +41,15 @@
 </template>
 <script lang="ts">
 import {
-  defineComponent
+  defineComponent, useStore
 } from '@nuxtjs/composition-api';
 import { mdiMenuDown, mdiMenuUp } from '@mdi/js';
+import { RootStoreState } from '~/types/state';
 
 type SelectProps = {
     name: string,
-    value: any
+    isSelected: boolean
+    count: number | undefined
 }
 
 export default defineComponent({
@@ -67,6 +69,15 @@ export default defineComponent({
       required: true
     }
   },
+  setup () {
+    const store = useStore<RootStoreState>();
+    const setFilter = (item: SelectProps) => {
+      item.isSelected = !item.isSelected;
+      store.dispatch('devices/filterDevices', item);
+    };
+
+    return { setFilter };
+  },
   data: () => ({
     svgPath: {
       mdiMenuDown,
@@ -79,5 +90,8 @@ export default defineComponent({
 <style lang="scss" scoped>
     label {
         font-weight: 700;
+    }
+    v-label {
+      text-transform: capitalize !important;
     }
 </style>

@@ -12,6 +12,7 @@
         :src="imageSource"
       />
     </v-row>
+
     <color-selector />
     <v-row>
       <v-card-text class="py-0">
@@ -23,9 +24,8 @@
       </v-card-title>
     </v-row>
     <v-row>
-      <div color="#00c300" outlined class="card__special rounded-lg px-4 py-2 mx-4 my-2">
-        <!-- {{ promotion }}  -->
-        PROMOTION GOES HERE variant[selected].promotion
+      <div v-if="hasPromotion" color="#00c300" outlined class="card__special rounded-lg px-4 py-2 mx-4 my-2">
+        {{ promotionText }}
       </div>
     </v-row>
     <v-card-actions class="card__actions ma-0 px-0">
@@ -42,6 +42,13 @@
         </div>
       </v-btn>
     </v-card-actions>
+    <v-img
+      v-if="hasSticker"
+      height="95"
+      contain
+      class="card__smartpakker"
+      src="https://www.kpn.com/shop/cms/assets/stickers/smartpakker.png"
+    />
   </v-card>
 </template>
 <script lang="ts">
@@ -71,16 +78,30 @@ export default defineComponent({
       type: String,
       default: '',
       required: true
+    },
+    hasPromotion: {
+      type: Boolean,
+      default: () => false,
+      required: true
+    },
+    promotionText: {
+      type: String,
+      default: '',
+      required: false
+    },
+    hasSticker: {
+      type: Boolean,
+      default: false,
+      required: false
     }
   },
   setup (props) {
     // wont work for the 1 windows phone that exists in the world :(
     const imageSource = props.os === 'IOS' ? '/iphone.svg' : '/android.svg';
 
-    // work out which one is selected by default
-    // set that in the colorSelector
-    // send through colors to colorSelector
-
+    // get default selected color from attributes.color
+    // set that in the color selector
+    // TODO: Set colors in color selector
     return {
       imageSource,
       icons: {
@@ -107,6 +128,14 @@ export default defineComponent({
   }
 
   .card {
+    // TODO: Positioning of smart pakker
+    // when there is no
+    &__smartpakker {
+      position:absolute;
+      bottom: 220px;
+      right: 80px;
+    }
+
     &__special {
       width: 100%;
       font-weight: 700;
@@ -115,7 +144,9 @@ export default defineComponent({
     }
 
     &__actions {
-      justify-content: end;
+      position: absolute;
+      bottom: 5px;
+      right: 10px;
     }
 
     &__icon {

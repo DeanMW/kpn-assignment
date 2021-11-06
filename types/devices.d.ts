@@ -1,4 +1,4 @@
-
+/* eslint-disable camelcase */
 export enum SimCardCapacity {
   DualSIM = 'Dual SIM',
   HybrideDualSIM = 'Hybride Dual SIM',
@@ -29,14 +29,14 @@ export enum PromotionBgColor {
 }
 
 export interface Attributes {
-  handsetCatPromotionSticker: null | string;
-  promotionLabel: null | string;
-  promotionSliderSource: null | string;
-  promotionBgColor: PromotionBgColor | null;
-  handsetCatPromotionStickerKz: null;
-  promotionLabelKz: null | string;
-  promotionSliderSourceKz: null | string;
-  promotionBgColorKz: null;
+  handset_cat_promotion_sticker: null | string;
+  promotion_label: null | string;
+  promotion_slider_source: null | string;
+  promotion_bg_color: PromotionBgColor | null;
+  handset_cat_promotion_sticker_kz: null;
+  promotion_label_kz: null | string;
+  promotion_slider_source_kz: null | string;
+  promotion_bg_color_kz: null;
 }
 
 export interface Product {
@@ -45,25 +45,25 @@ export interface Product {
   slug: string;
   manufacturer: string;
   model: string;
-  operatingSystem: OperatingSystem;
-  simCardCapacity: SimCardCapacity;
+  operating_system: OperatingSystem;
+  sim_card_capacity: SimCardCapacity;
   refurbished: boolean;
-  hasUsp: boolean;
-  has5G: boolean;
-  hasEsim: boolean;
+  has_usp: boolean;
+  has_5g: boolean;
+  has_esim: boolean;
   colors: string[];
-  sortOrder: number;
-  releaseDate: Date;
+  sort_order: number;
+  release_date: Date;
   default: string;
   variants: Variant[];
   attributes: Attributes;
-  hasPromotion: boolean;
+  has_promotion: boolean;
 }
 
 export interface deviceColor {
   color: string,
-  colorCode: string;
-  colorName: string;
+  color_code: string;
+  color_name: string;
 }
 
 export interface Devices {

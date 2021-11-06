@@ -7,7 +7,6 @@
             <span class="header--light"> Kies uit </span>
             {{ currentDevices.length }} telefoons
           </h1>
-
           <mobile-filter />
         </v-col>
       </v-row>
@@ -24,6 +23,9 @@
             :os="device.operating_system"
             :default-selection="device.default"
             :variants="device.variants"
+            :has-promotion="device.has_promotion"
+            :promotion-text="device.attributes.promotion_label"
+            :has-sticker="device.handset_cat_promotion_sticker"
           />
         </v-col>
       </v-row>
@@ -42,14 +44,11 @@ import { RootStoreState } from '~/types/state';
 export default defineComponent({
   setup () {
     const store = useStore<RootStoreState>();
-
     const currentDevices = computed(
       () => store.getters['devices/getDevices']
     );
 
     store.dispatch('devices/getDevices');
-
-    console.log(currentDevices);
 
     return {
       currentDevices

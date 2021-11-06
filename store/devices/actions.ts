@@ -8,11 +8,15 @@ const actions: ActionTree<Devices, RootStoreState> = {
     commit('setDevices', devices);
   },
   filterDevices ({ commit, rootState: { devices } }, variable) {
-    const filteredDevices = devices.products.filter((product) => {
-      return product.manufacturer === variable.manufacturer;
+    // filter needs major update
+    // moved to component
+    const filteredProducts = devices.products.filter((product) => {
+      return variable.isSelected
+        ? product.manufacturer === variable.name
+        : devices.products;
     });
 
-    commit('setDevices', { products: devices.products, filteredDevices });
+    commit('setDevices', { products: devices.products, filteredProducts });
   }
 };
 
