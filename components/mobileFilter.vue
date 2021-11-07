@@ -4,11 +4,11 @@
       outlined
       class="rounded-lg pa-5 d-flex"
     >
-      <multi-selector selector-id="brand" name="Merk" :options="brands" />
-      <multi-selector selector-id="color" name="Kleur" :options="colors" />
-      <multi-selector selector-id="network" name="5G" :options="has5g" />
-      <multi-selector selector-id="os" name="Besturingssysteem" :options="operatingSystem" />
-      <multi-selector selector-id="esim" name="E-sim" :options="hasEsim" />
+      <multi-selector selector-id="manufacturer" name="Merk" :options="brands" />
+      <multi-selector selector-id="colors" name="Kleur" :options="colors" />
+      <multi-selector selector-id="has_5g" name="5G" :options="has5g" />
+      <multi-selector selector-id="operating_system" name="Besturingssysteem" :options="operatingSystem" />
+      <multi-selector selector-id="has_esim" name="E-sim" :options="hasEsim" />
       <multi-selector selector-id="refurbished" name="Refurbished" :options="isRefurbished" />
       <multi-selector selector-id="sort" class="ml-auto" name="Refurbished" :options="[]" label="Sortered op:" />
     </v-card>
@@ -23,6 +23,7 @@
         <v-chip
           v-for="item in options"
           :key="item"
+          label
           close
           @click="setFilteredOptions(key, item)"
         >

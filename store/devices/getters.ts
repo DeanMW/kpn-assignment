@@ -1,5 +1,5 @@
 import { GetterTree } from 'vuex/types';
-import { Devices, Product } from '~/types/devices';
+import { Devices, Filters, Product } from '~/types/devices';
 import { RootStoreState } from '~/types/state';
 
 interface selectOption {
@@ -41,16 +41,20 @@ const getters: GetterTree<Devices, RootStoreState> = {
     return state.filteredProducts;
   },
 
+  getFilteredOptions (state): Filters {
+    return state.filteredOptions;
+  },
+
   // get unique brands and their count
   getBrands (state): selectOption[] {
-    const items = state.filteredProducts.map((item: Product) =>
+    const items = state.products.map((item: Product) =>
       ({ name: item.manufacturer, isSelected: false })
     );
 
     return getUniqueItems(items);
   },
 
-  // get unique colors as well as their counts
+  // get unique filtered colors as well as their counts
   getColors (state): selectOption[] {
     let colors: selectOption[] = [];
 
@@ -64,7 +68,7 @@ const getters: GetterTree<Devices, RootStoreState> = {
     return getUniqueItems(colors);
   },
 
-  // get operating systems and their counts
+  // get unique filtered operating systems and their counts
   getOS (state): selectOption[] {
     const items = state.filteredProducts.map((item: Product) =>
       ({ name: item.operating_system, isSelected: false })

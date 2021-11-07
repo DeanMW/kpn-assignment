@@ -5,11 +5,11 @@ export default (): Devices => ({
   products: [],
   filteredProducts: [],
   filteredOptions: {
-    brand: [],
-    color: [],
-    network: [],
-    os: [],
-    esim: [],
+    manufacturer: [],
+    colors: [],
+    has_5g: [],
+    operating_system: [],
+    has_esim: [],
     refurbished: []
   }
 });

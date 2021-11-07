@@ -25,8 +25,9 @@
             :variants="device.variants"
             :has-promotion="device.has_promotion"
             :promotion-text="device.attributes.promotion_label"
-            :has-sticker="device.handset_cat_promotion_sticker"
+            :has-sticker="!!device.variants[0].attributes.handset_cat_promotion_sticker"
           />
+          <!-- TODO: get correct sticker for variants -->
         </v-col>
       </v-row>
     </v-container>
