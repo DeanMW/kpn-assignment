@@ -66,7 +66,17 @@ export interface deviceColor {
   color_name: string;
 }
 
+export interface Filters {
+  brand: string[];
+  color: string[];
+  network: boolean[];
+  os: string[];
+  esim: boolean[];
+  refurbished: boolean[];
+}
+
 export interface Devices {
   products: Product[];
-  filteredProducts: Product[]
+  filteredProducts: Product[];
+  filteredOptions: Filters;
 }

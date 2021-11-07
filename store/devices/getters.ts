@@ -1,5 +1,5 @@
 import { GetterTree } from 'vuex/types';
-import { Attributes, Devices, Product, Variant } from '~/types/devices';
+import { Devices, Product } from '~/types/devices';
 import { RootStoreState } from '~/types/state';
 
 interface selectOption {
@@ -43,7 +43,7 @@ const getters: GetterTree<Devices, RootStoreState> = {
 
   // get unique brands and their count
   getBrands (state): selectOption[] {
-    const items = state.products.map((item: Product) =>
+    const items = state.filteredProducts.map((item: Product) =>
       ({ name: item.manufacturer, isSelected: false })
     );
 
@@ -54,10 +54,10 @@ const getters: GetterTree<Devices, RootStoreState> = {
   getColors (state): selectOption[] {
     let colors: selectOption[] = [];
 
-    state.products.forEach((product: Product) => {
+    state.filteredProducts.forEach((filteredProducts: Product) => {
       colors = [
         ...colors,
-        ...product.colors.map(color => ({ name: color, isSelected: false }))
+        ...filteredProducts.colors.map(color => ({ name: color, isSelected: false }))
       ];
     });
 
@@ -66,26 +66,26 @@ const getters: GetterTree<Devices, RootStoreState> = {
 
   // get operating systems and their counts
   getOS (state): selectOption[] {
-    const items = state.products.map((item: Product) =>
+    const items = state.filteredProducts.map((item: Product) =>
       ({ name: item.operating_system, isSelected: false })
     );
     return getUniqueItems(items);
   },
   get5g (state): selectOption[] {
-    const items = state.products.map((item: Product) =>
+    const items = state.filteredProducts.map((item: Product) =>
       ({ name: item.has_5g, isSelected: false })
     );
 
     return getUniqueItems(items);
   },
   getEsim (state): selectOption[] {
-    const items = state.products.map((item: Product) =>
+    const items = state.filteredProducts.map((item: Product) =>
       ({ name: item.has_esim, isSelected: false })
     );
     return getUniqueItems(items);
   },
   isRefurbished (state): selectOption[] {
-    const items = state.products.map((item: Product) =>
+    const items = state.filteredProducts.map((item: Product) =>
       ({ name: item.refurbished, isSelected: false })
     );
     return getUniqueItems(items);

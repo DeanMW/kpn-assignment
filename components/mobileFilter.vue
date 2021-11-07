@@ -4,35 +4,32 @@
       outlined
       class="rounded-lg pa-5 d-flex"
     >
-      <multi-selector id="brand" name="Merk" :options="brands" />
-      <multi-selector id="color" name="Kleur" :options="colors" />
-      <multi-selector id="network" name="5G" :options="has5g" />
-      <multi-selector id="os" name="Besturingssysteem" :options="operatingSystem" />
-      <multi-selector id="esim" name="E-sim" :options="hasEsim" />
-      <multi-selector id="condition" name="Refurbished" :options="isRefurbished" />
-      <multi-selector id="condition" class="ml-auto" name="Refurbished" :options="options" label="Sortered op:" />
+      <multi-selector selector-id="brand" name="Merk" :options="brands" />
+      <multi-selector selector-id="color" name="Kleur" :options="colors" />
+      <multi-selector selector-id="network" name="5G" :options="has5g" />
+      <multi-selector selector-id="os" name="Besturingssysteem" :options="operatingSystem" />
+      <multi-selector selector-id="esim" name="E-sim" :options="hasEsim" />
+      <multi-selector selector-id="refurbished" name="Refurbished" :options="isRefurbished" />
+      <multi-selector selector-id="sort" class="ml-auto" name="Refurbished" :options="[]" label="Sortered op:" />
     </v-card>
-    <!-- <v-chip-group
+    <v-chip-group
       column
       multiple
     >
-      <v-chip
-        v-for="brand in brands"
-        v-if="brand.isSelected"
-        :key="brand.name"
-        v-model="brands"
-        filter
-        outlined
+      <span
+        v-for="(options, key) in filteredOptions"
+        :key="key"
       >
-        {{ brand.name }}
-      </v-chip>
-      <v-chip
-        filter
-        outlined
-      >
-        Washer / Dryer
-      </v-chip>
-    </v-chip-group> -->
+        <v-chip
+          v-for="item in options"
+          :key="item"
+          close
+          @click="setFilteredOptions(key, item)"
+        >
+          {{ item }}
+        </v-chip>
+      </span>
+    </v-chip-group>
   </div>
 </template>
 <script lang="ts">
@@ -65,24 +62,23 @@ export default defineComponent({
       () => store.getters['devices/isRefurbished']
     );
 
+    const filteredOptions = computed(
+      () => store.state.devices.filteredOptions
+    );
+
+    const setFilteredOptions = (key: string, item: string | boolean) => {
+      store.dispatch('devices/setFilteredOptions', { name: item, id: key });
+    };
+
     return {
       brands,
       colors,
       operatingSystem,
       has5g,
       hasEsim,
-      isRefurbished
-    };
-  },
-  data () {
-    return {
-      value: [],
-      options: [
-        {
-          value: 'Alabama',
-          name: 'Alabama'
-        }
-      ]
+      isRefurbished,
+      filteredOptions,
+      setFilteredOptions
     };
   }
 });
