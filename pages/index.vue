@@ -38,7 +38,8 @@
 import {
   defineComponent,
   useStore,
-  computed
+  computed,
+  watch
 } from '@nuxtjs/composition-api';
 import { RootStoreState } from '~/types/state';
 
@@ -50,6 +51,10 @@ export default defineComponent({
     );
 
     store.dispatch('devices/getDevices');
+
+    watch([currentDevices], () => {
+      // console.log('changedCurrent devices', currentDevices);
+    }, { deep: true });
 
     return {
       currentDevices

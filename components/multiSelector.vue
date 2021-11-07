@@ -29,6 +29,7 @@
         >
           <v-list-item-title>
             <v-checkbox
+              v-model="item.isSelected"
               :label="`${item.name} (${item.count})`"
               @change="setFilteredOptions(item)"
             />
@@ -49,6 +50,7 @@ import { Filters } from '~/types/devices';
 type SelectProps = {
     name: string;
     count: number | undefined;
+    isSelected: boolean;
 }
 
 export default defineComponent({
@@ -77,6 +79,7 @@ export default defineComponent({
     const store = useStore<RootStoreState>();
     const id: keyof Filters = props.selectorId;
     const setFilteredOptions = (item: SelectProps) => {
+      item.isSelected = !item.isSelected;
       store.dispatch('devices/setFilteredOptions', { ...item, id });
     };
 

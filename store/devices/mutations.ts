@@ -7,6 +7,10 @@ type filterItem = {
   count: number | undefined;
 }
 
+const applyFilters = (products: Product[], filteredOptions: Filters, id: keyof Filters) => {
+  return products.filter((product: Product) => (filteredOptions[id] as any).includes(product[id]));
+};
+
 const mutations: MutationTree<Devices> = {
   setDevices (state, payload: {products: Product[], filteredProducts: Product[]}) {
     state.products = payload.products;
@@ -22,13 +26,34 @@ const mutations: MutationTree<Devices> = {
     const exists = (filteredOptions[id] as any).includes(name);
 
     // remove filter if it exists;
-    // add filter if it doesnt
+    // add filter if it doesnt;
     if (exists) {
       filteredOptions[id] = (filteredOptions[id] as any).filter((item: string) => item !== name);
+
+      // dont filter colors,
+      // way too much effort with this api
+      if (id === 'colors') { return; };
+
+      // reset products and reapply filters;
       state.filteredProducts = products;
+
+      Object.keys(state.filteredOptions).forEach((key: string) => {
+        if (state.filteredOptions[key as keyof Filters].length > 0) {
+          state.filteredProducts = applyFilters(products, filteredOptions, key as keyof Filters);
+        }
+      });
     } else {
       (filteredOptions[id] as any).push(name);
-      state.filteredProducts = [...products.filter((product: Product) => (filteredOptions[id] as any).includes(product[id]))];
+
+      // dont filter colors,
+      // way too much effort with this api
+      if (id === 'colors') { return; };
+
+      if (id === 'manufacturer') {
+        state.filteredProducts = applyFilters(products, filteredOptions, id);
+      } else {
+        state.filteredProducts = applyFilters(state.filteredProducts, filteredOptions, id);
+      }
     }
   }
 };
