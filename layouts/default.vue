@@ -13,8 +13,6 @@
 // set flex
 body {
     margin: 0;
-    // font-family: "Noto Sans", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell",
-    //     "Helvetica Neue", sans-serif;
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif;
     font-size: 16px;
     font-weight: 300;

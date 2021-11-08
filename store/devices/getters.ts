@@ -58,6 +58,7 @@ const getters: GetterTree<Devices, RootStoreState> = {
   getColors (state): selectOption[] {
     let colors: selectOption[] = [];
 
+    // TODO: could use reduce here
     state.filteredProducts.forEach((filteredProducts: Product) => {
       colors = [
         ...colors,
@@ -93,7 +94,7 @@ const getters: GetterTree<Devices, RootStoreState> = {
       ({ name: item.refurbished, isSelected: false })
     );
     return getUniqueItems(items);
-  }
+  },
 };
 
 export default getters;

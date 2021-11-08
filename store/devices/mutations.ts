@@ -8,6 +8,7 @@ type filterItem = {
 }
 
 const applyFilters = (products: Product[], filteredOptions: Filters, id: keyof Filters) => {
+  // TODO: can be done using sum for efficiency
   return products.filter((product: Product) => (filteredOptions[id] as any).includes(product[id]));
 };
 
@@ -20,6 +21,10 @@ const mutations: MutationTree<Devices> = {
     const { filteredOptions, products } = state;
     const { id, name } = payload;
 
+    // dont filter colors,
+    // way too much effort with this api
+    if (id === 'colors') { return; };
+
     // TypeScript BUG: fix that alllows you to iterate through union types
     // https://github.com/microsoft/TypeScript/issues/36390#issuecomment-641718624
     // lines: 22, 25, 27
@@ -29,10 +34,6 @@ const mutations: MutationTree<Devices> = {
     // add filter if it doesnt;
     if (exists) {
       filteredOptions[id] = (filteredOptions[id] as any).filter((item: string) => item !== name);
-
-      // dont filter colors,
-      // way too much effort with this api
-      if (id === 'colors') { return; };
 
       // reset products and reapply filters;
       state.filteredProducts = products;
@@ -44,10 +45,6 @@ const mutations: MutationTree<Devices> = {
       });
     } else {
       (filteredOptions[id] as any).push(name);
-
-      // dont filter colors,
-      // way too much effort with this api
-      if (id === 'colors') { return; };
 
       if (id === 'manufacturer') {
         state.filteredProducts = applyFilters(products, filteredOptions, id);
